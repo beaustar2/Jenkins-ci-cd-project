@@ -3,12 +3,12 @@ pipeline {
     stages {
         stage ('initialize mvn') {
             steps {
-                sh 'mvn initialize'
+                sh '/usr/bin/mvn/initialize'
             }
         }
           stage ('build') {
             steps {
-                sh 'mvn clean package'
+                sh '/usr/bin/mvn/mvn clean package'
             }
         }
           stage ('test') {
