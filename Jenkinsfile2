@@ -1,0 +1,25 @@
+pipeline {
+    agent any
+    stages {
+        stage ('initialize mvn') {
+            steps {
+                sh 'mvn initialize'
+            }
+        }
+          stage ('build') {
+            steps {
+                sh 'mvn clean package'
+            }
+        }
+          stage ('test') {
+            steps {
+                sh 'mvn test'
+            }
+        }
+          stage ('deployment') {
+            steps {
+              sh "scp -o StrictHostKeyChecking=no /var/lib/jenkins/workspace/cd-proj/target/webapp-0.2.war centos@35.87.24.39:/home/centos"
+            }
+        }       
+    }
+}
