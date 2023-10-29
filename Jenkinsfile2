@@ -18,7 +18,7 @@ pipeline {
         }
           stage ('deployment') {
             steps {
-              sh "scp -o StrictHostKeyChecking=no /var/lib/jenkins/workspace/cd-proj/target/webapp-0.2.war centos@35.87.24.39:/home/centos"
+               sh 'scp -o StrictHostKeyChecking=no /var/lib/jenkins/workspace/Jenkins Pipeline Project/target/webapp-0.2.war centos@3.135.192.169:/home/centos/opt/tomcat'
             }
         }       
     }
