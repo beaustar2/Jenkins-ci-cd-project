@@ -15,6 +15,7 @@ pipeline {
                 steps {
                     echo 'Deploying....'    
             sshagent(['tomcat']) {
+            sh "ssh centos@3.135.192.169"
             sh "scp -o StrictHostKeyChecking=no /var/lib/jenkins/workspace/Jenkins Pipeline Project/target/webapp-0.2.war centos@3.135.192.169:/home/centos/opt/tomcat"
                }
             }
