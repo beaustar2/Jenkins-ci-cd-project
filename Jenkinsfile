@@ -14,6 +14,7 @@ pipeline {
             }
             steps {
                 sh 'echo "Building the project"'
+                
             }
         }
         stage ('Deploy to tomcat server') {
@@ -32,3 +33,4 @@ pipeline {
             }
         }
     }
+}
