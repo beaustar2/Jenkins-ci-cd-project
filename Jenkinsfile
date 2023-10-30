@@ -1,9 +1,24 @@
 pipeline {
     agent any
+
     stages {
         stage('Build') {
+            steps{
+                sh 'mvn clean package'
+            }
+            post{
+                success{
+                    echo"Archiving the Artifacts"
+                    archiveArtifacts artifacts: '*/target/.war'
+                }
+            }
             steps {
                 sh 'echo "Building the project"'
+            }
+        }
+        stage ('Deploy to tomcat server') {
+            steps{
+                
             }
         }
         stage('Test') {
@@ -11,13 +26,9 @@ pipeline {
                 sh 'echo "Running tests"'
             }
         }
-        stage('deploy') {
+        stage('Deploy') {
             steps {
-                sh 'echo "Deploying...."'    
-                sshagent(['centos']) {
-                    sh 'scp -o StrictHostKeyChecking=no /var/lib/jenkins/workspace/Jenkins Pipeline Project/target/webapp-0.2.war centos@3.135.192.169:/home/centos/opt/tomcat'
-                }
+                sh 'echo "Deploying the application"'
             }
         }
     }
-}
