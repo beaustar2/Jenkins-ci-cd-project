@@ -17,7 +17,7 @@ pipeline {
             steps {
                 echo 'Running tests'
                 sh 'mvn test'
-                stash(name: 'jenkinsProject', includes: 'target/*.war')
+                stash(name: 'Jenkins-CiCd-project', includes: 'target/*.war')
             }
         }
         stage('Deploy') {
@@ -26,7 +26,7 @@ pipeline {
             }
             steps {
                 echo 'Deploying the application'
-                unstash 'jenkinsProject'
+                unstash 'Jenkins-CiCd-project'
                 sh "~/apache-tomcat-7.0.94/bin/shutdown.sh"  // Shutdown Tomcat
                 sh "sudo rm -rf ~/apache-tomcat-7.0.94/webapps/*.war"  // Remove existing WAR files
                 sh "sudo mv target/*.war ~/apache-tomcat-7.0.94/webapps/"  // Deploy the new WAR file
