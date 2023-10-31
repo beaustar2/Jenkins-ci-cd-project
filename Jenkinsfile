@@ -25,7 +25,7 @@ pipeline {
             agent any
             steps {
                 // Run tests using Maven
-                sh 'mvn test'
+                sh '/home/centos/Jenkins-ci-cd-project/pom.xml && mvn test'
             }
         }
 
