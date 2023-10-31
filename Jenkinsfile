@@ -17,7 +17,7 @@ pipeline {
                 echo 'Building in progress'
                 sh 'ls -ltr'
                 // Build the project and create a JAR file
-                sh 'cd /var/lib/jenkins/workspace/Jenkins-CiCd-Project && mvn clean package'
+                sh 'cd src/test/java/mypackage/CalculatorTest.java && mvn clean package'
             }
         }
 
