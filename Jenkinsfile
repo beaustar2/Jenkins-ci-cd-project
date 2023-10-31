@@ -14,7 +14,7 @@ pipeline {
         }
         stage('Build') {
             agent {
-                label 'node1'
+                label 'node2'
             }
             steps {
                 echo 'Building in progress'
