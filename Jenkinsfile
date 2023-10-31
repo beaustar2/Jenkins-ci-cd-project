@@ -1,9 +1,5 @@
 pipeline {
     agent any
-    tools {
-        // Define the Maven tool with the desired version
-        maven 'Apache Maven 3.0.5'
-    }
     stages {
         stage('Checkout') {
             steps {
