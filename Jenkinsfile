@@ -17,7 +17,7 @@ pipeline {
                 echo 'Building in progress'
                 sh 'ls -ltr'
                 // Build the project and create a JAR file
-                sh 'cd /home/centos/Jenkins-ci-cd-project/src/test/java/mypackage && mvn clean package'
+                sh 'cd /home/centos/Jenkins-ci-cd-project/target/test-classes/mypackage/CalculatorTest.class/usr/bin/mvn && mvn clean package'
             }
         }
 
@@ -25,7 +25,7 @@ pipeline {
             agent any
             steps {
                 // Run tests using Maven
-                sh '/home/centos/Jenkins-ci-cd-project/pom.xml && mvn test'
+                sh '/home/centos/Jenkins-ci-cd-project/pom.xml/usr/local/jdk-11.0.20 && mvn test'
             }
         }
 
