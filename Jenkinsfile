@@ -25,6 +25,9 @@ pipeline {
         }
 
         stage('Test') {
+            agent {
+                label 'node1'
+            }
             steps {
                 // Run tests
                 sh 'mvn test'
@@ -32,6 +35,9 @@ pipeline {
         }
 
         stage('Deploy') {
+            agent {
+                label 'Node2'
+            }
             steps {
                 // Deploy your application
                 sh 'scp /home/centos/Jenkins-ci-cd-project/Jenkinsfile centos@172.31.6.181:/home/centos/apache-tomcat-7.0.94/webapps/WebAppCal-0.0.6/WEB-INF/Jenkinsfile'
@@ -48,7 +54,7 @@ pipeline {
                 }
                 failure {
                     script {
-                        // Send email for failed build
+                        // Send email for a failed build
                         mail to: 'kelvinatete@yahoo.com',
                              subject: "Build Failed - ${currentBuild.fullDisplayName}",
                              body: "Oops! The build failed.\n\nCheck console output at ${BUILD_URL}"
