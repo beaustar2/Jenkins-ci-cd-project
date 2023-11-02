@@ -21,6 +21,9 @@ pipeline {
         }
         stage('Build and Package') {
             steps {
+                agent {
+                    Label 'node2'
+                }
                 script {
                     // Change directory and run Maven commands
                     sh """
