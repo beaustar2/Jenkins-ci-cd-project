@@ -13,9 +13,7 @@ pipeline {
             }
         }
         stage('Build') {
-            agent {
-                label 'node2'
-            }
+            agent any
             steps {
                 echo 'Building in progress'
                 sh 'ls -ltr'
