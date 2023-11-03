@@ -2,8 +2,8 @@ pipeline {
     agent any
     environment {
         PROJECT_PATH = "/home/centos/Jenkins-ci-cd-project"
-        MAVEN_PATH = '/usr/bin/mvn' // Corrected the path
-        JAVA_HOME = '/usr' // Corrected JAVA_HOME path to the root of the Java installation
+        MAVEN_PATH = '/usr/bin/mvn' 
+        JAVA_HOME = '/usr' 
     }
     stages {
         stage('Checkout') {
@@ -19,7 +19,7 @@ pipeline {
             }
         }
         stage('Build and Package') {
-            agent { label 'node1' } // Corrected the label definition
+            agent { label 'node1' } 
             steps {
                 script {
                     // Change directory and run Maven commands
@@ -38,7 +38,7 @@ pipeline {
             }
         }
         stage('Deploy') {
-            agent { label 'node2' } // Corrected the label definition
+            agent { label 'node2' } 
             steps {
                 echo 'Deploying your application'
                 sh 'scp ${PROJECT_PATH}/Jenkinsfile centos@172.31.6.181:/home/centos/apache-tomcat-7.0.94/webapps/WebAppCal-0.0.6/WEB-INF/Jenkinsfile'
