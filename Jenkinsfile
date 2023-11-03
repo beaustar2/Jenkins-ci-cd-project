@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        PROJECT_PATH = '/home/centos/Jenkins-ci-cd-project/src/test/java/mypackage'
+        PROJECT_PATH = "$WORKSPACE/src/test/java/mypackage"
         MAVEN_PATH = '/usr/bin/mvn' // Corrected the path
     }
     stages {
