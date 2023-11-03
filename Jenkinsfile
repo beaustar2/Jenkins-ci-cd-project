@@ -18,7 +18,7 @@ pipeline {
             }
         }
         stage('Build and Package') {
-            agent { label 'node2' } // Corrected the label definition
+            agent { label 'node1' } // Corrected the label definition
             steps {
                 script {
                     // Change directory and run Maven commands
