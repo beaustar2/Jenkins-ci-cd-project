@@ -3,7 +3,7 @@ pipeline {
     environment {
         PROJECT_PATH = "/home/centos/Jenkins-ci-cd-project"
         MAVEN_PATH = '/usr/bin/mvn' // Corrected the path
-        JAVA_HOME = '/usr/bin/java'
+        JAVA_HOME = '/usr' // Corrected JAVA_HOME path to the root of the Java installation
     }
     stages {
         stage('Checkout') {
