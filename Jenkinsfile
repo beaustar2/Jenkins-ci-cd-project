@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        PROJECT_PATH = "$WORKSPACE/src/test/java/mypackage"
+        PROJECT_PATH = "/home/centos/remoting/workspace/Jenkins-CiCd-Project"
         MAVEN_PATH = '/usr/bin/mvn' // Corrected the path
     }
     stages {
