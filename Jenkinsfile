@@ -2,28 +2,24 @@ pipeline {
     agent any
     environment {
         PROJECT_PATH = '/home/centos/Jenkins-ci-cd-project/src/test/java/mypackage'
-        MAVEN_PATH = 'usr/bin/mvn'
+        MAVEN_PATH = '/usr/bin/mvn' // Corrected the path
     }
     stages {
         stage('Checkout') {
             steps {
-                sh 'echo passed'
-                // git branch: 'master', url: https://github.com/beaustar2/Jenkins-ci-cd-project.git
+                echo 'Checking out the source code'
                 checkout scm
             }
         }
         stage('Build') {
-            agent any
             steps {
                 echo 'Building in progress'
                 sh 'ls -ltr'
             }
         }
         stage('Build and Package') {
+            agent { label 'node2' } // Corrected the label definition
             steps {
-                agent {
-                    Label 'node2'
-                }
                 script {
                     // Change directory and run Maven commands
                     sh """
@@ -35,30 +31,34 @@ pipeline {
         }
         stage('Test') {
             steps {
-                // Run tests
-                sh 'mvn test'
+                echo 'Running tests'
+                sh '\${MAVEN_PATH} test' // Use the MAVEN_PATH defined in the environment
             }
         }
         stage('Deploy') {
             steps {
-                // Deploy your application
+                echo 'Deploying your application'
                 sh 'scp /home/centos/Jenkins-ci-cd-project/Jenkinsfile centos@172.31.6.181:/home/centos/apache-tomcat-7.0.94/webapps/WebAppCal-0.0.6/WEB-INF/Jenkinsfile'
             }
             post {
                 success {
                     script {
-                        // send email for successful build
-                        mail to: 'kelvinatete@yahoo.com',
-                             subject: "Build Successful - ${currentBuild.fullDisplayName}",
-                             body: "Congratulations! The build was successful.\n\nCheck console output at ${BUILD_URL}"
+                        echo 'Sending email for successful build'
+                        emailext (
+                            to: 'kelvinatete@yahoo.com',
+                            subject: "Build Successful - ${currentBuild.fullDisplayName}",
+                            body: "Congratulations! The build was successful.\n\nCheck console output at ${BUILD_URL}"
+                        )
                     }
                 }
                 failure {
                     script {
-                        // Send email for failed build
-                        mail to: 'kelvinatete@yahoo.com',
-                             subject: "Build Failed - ${currentBuild.fullDisplayName}",
-                             body: "The build was unsuccessful.\n\nCheck console output at ${BUILD_URL}"
+                        echo 'Sending email for failed build'
+                        emailext (
+                            to: 'kelvinatete@yahoo.com',
+                            subject: "Build Failed - ${currentBuild.fullDisplayName}",
+                            body: "The build was unsuccessful.\n\nCheck console output at ${BUILD_URL}"
+                        )
                     }
                 }
             }
