@@ -2,8 +2,8 @@ pipeline {
     agent any
     environment {
         PROJECT_PATH = "/home/centos/Jenkins-ci-cd-project"
-        MAVEN_PATH = '/opt/maven/bin/mvn' 
-        JAVA_HOME = '/usr' 
+        MAVEN_PATH = '/opt/maven/bin/mvn'
+        JAVA_HOME = '/usr'
     }
     stages {
         stage('Checkout') {
@@ -19,29 +19,31 @@ pipeline {
             }
         }
         stage('Build and Package') {
-            agent { label 'node1' } 
+            agent { label 'node1' }
             steps {
                 script {
                     // Change directory and run Maven commands
-                    sh """
-                        cd \${PROJECT_PATH}
-                        \${MAVEN_PATH} clean package
-                        export JAVA_HOME=\${JAVA_HOME}
-                    """
+                    dir("${PROJECT_PATH}") {
+                        sh """
+                            ${MAVEN_PATH} clean package
+                            export JAVA_HOME=${JAVA_HOME}
+                            ${MAVEN_PATH} clean install --update-snapshots
+                        """
+                    }
                 }
             }
         }
         stage('Test') {
             steps {
                 echo 'Running tests'
-                sh "\${MAVEN_PATH} test" // Use the MAVEN_PATH defined in the environment
+                sh "${MAVEN_PATH} test" // Use the MAVEN_PATH defined in the environment
             }
         }
         stage('Deploy') {
-            agent { label 'node2' } 
+            agent { label 'node2' }
             steps {
                 echo 'Deploying your application'
-                sh 'scp ${PROJECT_PATH}/Jenkinsfile centos@172.31.6.181:/home/centos/apache-tomcat-7.0.94/webapps/WebAppCal-0.0.6/WEB-INF/Jenkinsfile'
+                sh "scp ${PROJECT_PATH}/Jenkinsfile centos@172.31.6.181:/home/centos/apache-tomcat-7.0.94/webapps/WebAppCal-0.0.6/WEB-INF/Jenkinsfile"
             }
             post {
                 success {
