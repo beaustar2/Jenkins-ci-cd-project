@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment {
         PROJECT_PATH = "/home/centos/Jenkins-ci-cd-project"
-        MAVEN_PATH = '/usr/bin/mvn' 
+        MAVEN_PATH = '/opt/maven/bin/mvn' 
         JAVA_HOME = '/usr' 
     }
     stages {
